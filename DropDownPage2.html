@@ -32,7 +32,16 @@
       urlArr = value.split(',');
 
       document.getElementById("landingImage").src = urlArr[0];
+
+      try {
       document.getElementById("detailImg").src = urlArr[1];
+      } catch (error) {
+        console.log("Couldn't find detailImg")
+      }
+
+      var dd = document.getElementById('adidasdropdown');
+      var color = dd.options[dd.selectedIndex].innerHTML;
+      console.log("hi the color selection was: " + color.trim() + " at: " + new Date().toLocaleString())
     }
   </script>
 
@@ -7039,7 +7048,7 @@
                                 <!-- MATT CODE -->
                                 <span class="">
                                   <span>
-                                    <select onchange="jsFunction(this.value)">
+                                    <select id="adidasdropdown" onchange="jsFunction(this.value)">
                                       <option value="https://m.media-amazon.com/images/I/71oWLzTGdkL._AC_SX500._SX._UX._SY._UY_.jpg,https://m.media-amazon.com/images/I/71oWLzTGdkL._AC_UL1500_.jpg" selected="">
                                         Pink Tint/Silver Metallic/White
                                       </option>
