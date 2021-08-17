@@ -12,7 +12,6 @@
   <script async="" src="./DropDownPage1_files/31YXrY93hfL.js.download" crossorigin="anonymous"></script>
 
   <!-- MATT CODE -->
-
   <script>
     var tmpanswers = "color,time\n";
     var tmpcoords = "x,y\n"
@@ -37,11 +36,11 @@
       var file = new Blob([prepFile], { type: "text/csv" });
       var fileCoord = new Blob([prepFileCoord], { type: "text/csv" });
 
-      var fileName = "coltime_" + sessionID + ".csv";
-      var fileNameCoord = "coord_" + sessionID + ".csv";
+      var fileName = "dd1coltime_" + sessionID + ".csv";
+      var fileNameCoord = "dd1coord_" + sessionID + ".csv";
 
-      var filePath = "Amazon-Adidas/DD-S/" + fileName;
-      var filePathCoord = "Amazon-Adidas/DD-S/" + fileNameCoord;
+      var filePath = "Amazon-Adidas/DD-S/" + sessionID + "/" + fileName;
+      var filePathCoord = "Amazon-Adidas/DD-S/" + sessionID + "/" + fileNameCoord;
 
       var fileUri = "https://" + bucketRegion + ".amazonaws.com/asu-gew-webpage-6221/" + filePath;
       var fileUriCoord = "https://" + bucketRegion + ".amazonaws.com/asu-gew-webpage-6221/" + filePathCoord;
@@ -144,7 +143,6 @@
       var t = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
       tmpanswers = tmpanswers + (color.trim() + "," + t + "\n");
       submitSelection();
-      //console.log("hi the color selection was: " + color.trim() + " at: " + new Date().toLocaleString())
     }
   </script>
 

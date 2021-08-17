@@ -4,6 +4,89 @@
   
   <script async="" src="./SwatchPage1_files/a9-tq-forensics.min.js(1).download" crossorigin="anonymous"></script>
   <script async="" src="./SwatchPage1_files/31YXrY93hfL.js(1).download" crossorigin="anonymous"></script>
+
+  <!-- MATT CODE -->
+  <script>
+    var tmpanswers = "color,time\n";
+    var tmpcoords = "x,y\n"
+    onmousemove = function (e) {
+      tmpcoords = tmpcoords + e.clientX + "," + e.clientY + "\n";
+    }
+    function uuidv4() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+    var sessionID = uuidv4();
+
+    function submitSelection() {
+      // Prepare file
+      var prepFile = tmpanswers;
+      var prepFileCoord = tmpcoords;
+
+      var bucketRegion = "us-east-2"
+
+      var file = new Blob([prepFile], { type: "text/csv" });
+      var fileCoord = new Blob([prepFileCoord], { type: "text/csv" });
+
+      var fileName = "s1coltime_" + sessionID + ".csv";
+      var fileNameCoord = "s1coord_" + sessionID + ".csv";
+
+      var filePath = "Amazon-Adidas/DD-S/" + sessionID + "/" + fileName;
+      var filePathCoord = "Amazon-Adidas/DD-S/" + sessionID + "/" + fileNameCoord;
+
+      var fileUri = "https://" + bucketRegion + ".amazonaws.com/asu-gew-webpage-6221/" + filePath;
+      var fileUriCoord = "https://" + bucketRegion + ".amazonaws.com/asu-gew-webpage-6221/" + filePathCoord;
+
+      s3.upload({
+        Key: filePath,
+        Body: file
+      },
+        function (err, data) {
+          if (err) {
+            reject('error');
+          }
+        }).on('httpUploadProgress', function (progress) {
+          var uploaded = parseInt((progress.loaded * 100) / progress.total);
+          $("progress").attr('value', uploaded);
+        });
+
+      s3.upload({
+        Key: filePathCoord,
+        Body: fileCoord
+      },
+        function (err, data) {
+          if (err) {
+            reject('error');
+          }
+        }).on('httpUploadProgress', function (progress) {
+          var uploaded = parseInt((progress.loaded * 100) / progress.total);
+          $("progress").attr('value', uploaded);
+        });
+    }
+  </script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.24.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript">
+    //Bucket Configurations
+    var bucketName = "asu-gew-webpage-6221";
+    var bucketRegion = "us-east-2";
+    var IdentityPoolId = "us-east-2:358ba255-7323-4f73-846c-67582cb8e6c5";
+
+    AWS.config.update({
+      region: bucketRegion,
+      credentials: new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: IdentityPoolId
+      })
+    });
+
+    var s3 = new AWS.S3({
+      apiVersion: '2006-03-01',
+      params: { Bucket: bucketName }
+    });
+  </script>
+
   <style class="vjs-styles-defaults">
     .video-js {
       width: 300px;
@@ -29,7 +112,10 @@
   <!-- MATT CODE -->
   <script>
     function datarecordfunc(color) {
-      console.log("hi the color selection was: " + color + " at: " + new Date().toLocaleString())
+      var d = new Date();
+      var t = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+      tmpanswers = tmpanswers + (color + "," + t + "\n");
+      submitSelection();
     }
   </script>
 
