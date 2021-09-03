@@ -14,6 +14,14 @@
   <script async="" src="./SwatchPage1_files/31YXrY93hfL.js(1).download" crossorigin="anonymous"></script>
 
   <!-- MATT CODE -->
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function(event) {
+      var d = new Date();
+      var t = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+      tmpanswers = tmpanswers + ("page load," + t + "\n");
+    });
+  </script>
+
   <script>
     var tmpanswers = "color,time\n";
     var tmpcoords = "x,y\n"
@@ -29,6 +37,10 @@
     var sessionID = uuidv4();
 
     function submitSelection() {
+      
+      var d = new Date();
+      var timetag = (d.getMonth() + 1) + "-" + d.getDate() + "-s2-" + sessionID;
+
       // Prepare file
       var prepFile = tmpanswers;
       var prepFileCoord = tmpcoords;
@@ -41,8 +53,8 @@
       var fileName = "s2coltime_" + sessionID + ".csv";
       var fileNameCoord = "s2coord_" + sessionID + ".csv";
 
-      var filePath = "Amazon-Adidas/DD-S/" + sessionID + "/" + fileName;
-      var filePathCoord = "Amazon-Adidas/DD-S/" + sessionID + "/" + fileNameCoord;
+      var filePath = "Amazon-Adidas/DD-S/" + timetag + "/" + fileName;
+      var filePathCoord = "Amazon-Adidas/DD-S/" + timetag + "/" + fileNameCoord;
 
       var fileUri = "https://" + bucketRegion + ".amazonaws.com/asu-gew-webpage-6221/" + filePath;
       var fileUriCoord = "https://" + bucketRegion + ".amazonaws.com/asu-gew-webpage-6221/" + filePathCoord;
